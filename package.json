@@ -1,0 +1,30 @@
+{
+  "name": "rett",
+  "version": "1.0.0",
+  "description": "Regular expressions template tag",
+  "main": "src/index.js",
+  "typings": "src/index.d.ts",
+  "keywords": [
+    "regex",
+    "regexp",
+    "escape",
+    "tagged",
+    "string"
+  ],
+  "scripts": {
+    "test": "eslint ./ && node test/index.js"
+  },
+  "author": "1Computer",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1Computer1/rett.git"
+  },
+  "bugs": {
+    "url": "https://github.com/1Computer1/rett/issues"
+  },
+  "homepage": "https://github.com/1Computer1/rett"
+}
