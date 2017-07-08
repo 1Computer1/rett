@@ -1,41 +1,41 @@
-function re(tagOrFlags, ...args) {
-    if (re.isTemplateTag(tagOrFlags)) {
-        const tag = tagOrFlags;
-        return re.create(tag.raw, args);
+function re(string, ...args) {
+    if (re.isTemplateTag(string)) {
+        return re.create(string.raw, args);
     }
 
     return function _re(tag, ...subs) {
-        const flags = tagOrFlags;
         const [escape, multiline] = args;
-        return re.create(tag.raw, subs, { flags, escape, multiline });
+        return re.create(tag.raw, subs, {
+            escape,
+            multiline,
+            flags: string
+        });
     };
 }
 
 const namespace = {
-    raw(tagOrFlags, ...args) {
-        if (re.isTemplateTag(tagOrFlags)) {
-            const tag = tagOrFlags;
-            return re.create(tag.raw, args, { escape: false });
+    RegExp,
+    ignored: Symbol('ignored'),
+    specialEscapeRegex: /[|\\{()[^$+*?.-]/g,
+
+    raw(string, ...args) {
+        if (re.isTemplateTag(string)) {
+            return re('', false)(string, ...args);
         }
 
-        return function _re(tag, ...subs) {
-            const flags = tagOrFlags;
-            const [, multiline] = args;
-            return re.create(tag.raw, subs, { flags, multiline, escape: false });
-        };
+        args[0] = false;
+        return re(string, ...args);
     },
-    line(tagOrFlags, ...args) {
-        if (re.isTemplateTag(tagOrFlags)) {
-            const tag = tagOrFlags;
-            return re.create(tag.raw, args, { multiline: true });
+
+    line(string, ...args) {
+        if (re.isTemplateTag(string)) {
+            return re('', true, true)(string, ...args);
         }
 
-        return function _re(tag, ...subs) {
-            const flags = tagOrFlags;
-            const [escape] = args;
-            return re.create(tag.raw, subs, { flags, escape, multiline: true });
-        };
+        args[1] = true;
+        return re(string, ...args);
     },
+
     create(raw, subs, { flags = '', escape = true, multiline = false } = {}) {
         for (let i = 0; i < subs.length; i++) {
             const sub = subs[i];
@@ -58,6 +58,7 @@ const namespace = {
 
         return new re.RegExp(string, flags);
     },
+
     escape(string, ...subs) {
         if (re.isTemplateTag(string)) {
             string = String.raw({ raw: string.raw }, ...subs);
@@ -65,6 +66,7 @@ const namespace = {
 
         return string.replace(re.specialEscapeRegex, '\\$&');
     },
+
     ignore(string, ...subs) {
         if (re.isTemplateTag(string)) {
             string = String.raw({ raw: string.raw }, ...subs);
@@ -75,6 +77,7 @@ const namespace = {
         str[re.ignored] = true;
         return str;
     },
+
     isTemplateTag(item) {
         if (!Array.isArray(item) || !item.raw) return false;
 
@@ -84,16 +87,8 @@ const namespace = {
         }
 
         return true;
-    },
-    ignored: Symbol('ignored'),
-    specialEscapeRegex: /[|\\{()[^$+*?.-]/g,
-    RegExp: RegExp
+    }
 };
 
-Object.defineProperties(re, Object.getOwnPropertyNames(namespace).reduce((obj, name) => {
-    const desc = Object.getOwnPropertyDescriptor(namespace, name);
-    obj[name] = desc;
-    return obj;
-}, {}));
-
+Object.assign(re, namespace);
 module.exports = re;
