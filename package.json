@@ -1,6 +1,6 @@
 {
   "name": "rett",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Regular expressions template tag",
   "main": "src/index.js",
   "typings": "src/index.d.ts",
