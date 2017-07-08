@@ -74,5 +74,10 @@ const namespace = {
     RegExp: RegExp
 };
 
-Object.defineProperties(re, Object.getOwnPropertyDescriptors(namespace));
+Object.defineProperties(re, Object.getOwnPropertyNames(namespace).reduce((obj, name) => {
+    const desc = Object.getOwnPropertyDescriptor(namespace, name);
+    obj[name] = desc;
+    return obj;
+}, {}));
+
 module.exports = re;
