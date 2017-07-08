@@ -37,6 +37,22 @@ console.log(re`${text} \d+`);
 => /\?\+\{\[\(\) \d+/
 ```
 
+### Multiline Regex
+
+The `re.line` function is used for multiline regex.  
+It has support for indents as well as single-line comments.  
+It works in the same way as the `re` function.  
+
+```js
+console.log(re.line`
+    (
+        \d+     // Digits
+        [A-Z]   // Letter
+    )
+`);
+=> /(\d+[A-Z])/
+```
+
 ### Ignoring Escape
 
 Ignore escapes if you are planning on building regex bit by bit.  
@@ -68,6 +84,10 @@ Used internally.
 ### `re.escape`
 
 Escapes special regex characters from a string.  
+
+### `re.isTemplateTag`
+
+Checks if a value is a template tag.  
 
 ### `re.specialEscapeRegex`
 

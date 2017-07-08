@@ -40,6 +40,19 @@ const tests = {
         const two = 'a+b+c+';
         const regex = re('i')`^${one} ?${re.ignore(two)}$`;
         return is(regex, /^\[\)\*\?\{\$ ?a+b+c+$/i);
+    },
+    multiline() {
+        const regex = re.line('g')`
+            Hello
+            (
+                World
+                (?:
+                    !|\.
+                )*
+            ) // Hello world!
+        `;
+
+        return is(regex, /Hello(World(?:!|\.)*)/g);
     }
 };
 
