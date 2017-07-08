@@ -12,6 +12,18 @@ function re(tagOrFlags, ...args) {
 }
 
 const namespace = {
+    raw(tagOrFlags, ...args) {
+        if (re.isTemplateTag(tagOrFlags)) {
+            const tag = tagOrFlags;
+            return re.create(tag.raw, args, { escape: false });
+        }
+
+        return function _re(tag, ...subs) {
+            const flags = tagOrFlags;
+            const [, multiline] = args;
+            return re.create(tag.raw, subs, { flags, multiline, escape: false });
+        };
+    },
     line(tagOrFlags, ...args) {
         if (re.isTemplateTag(tagOrFlags)) {
             const tag = tagOrFlags;

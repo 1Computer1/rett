@@ -57,7 +57,7 @@ console.log(re.line`
 
 Ignore escapes if you are planning on building regex bit by bit.  
 This is done with the `re.ignore` function which can take either a string or a template tag.  
-The `re` function can take a second param that will disable escaping altogether.  
+The `re.raw` function is also available for no escaping at all.  
 
 ```js
 const special = '{0,2}';
@@ -65,7 +65,7 @@ const special = '{0,2}';
 console.log(re`1${re.ignore(special)}`);
 => /1{0,2}/
 
-console.log(re('', false)`1${special}`);
+console.log(re.raw`1${special}`);
 => /1{0,2}/
 
 const digits = re.ignore`\d+`;

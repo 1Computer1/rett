@@ -1,7 +1,10 @@
 declare function re(tag: TemplateStringsArray, ...subs: any[]): RegExp;
-declare function re(flags: string, escape?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
+declare function re(flags: string, escape?: boolean, multiline?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
 
 declare namespace re {
+    export function raw(tag: TemplateStringsArray, ...subs: any[]): RegExp;
+    export function raw(flags: string, escape?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
+
     export function line(tag: TemplateStringsArray, ...subs: any[]): RegExp;
     export function line(flags: string, escape?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
 

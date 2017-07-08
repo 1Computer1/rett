@@ -29,7 +29,7 @@ const tests = {
     },
     noEscape() {
         const text = '?';
-        const regex = re('', false)`wow${text}`;
+        const regex = re.raw`wow${text}`;
         return is(regex, /wow?/);
     },
     building() {
