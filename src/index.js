@@ -1,5 +1,3 @@
-const ignored = Symbol('ignored');
-
 function re(tagOrFlags, ...args) {
     if (re.isTemplateTag(tagOrFlags)) {
         const tag = tagOrFlags;
@@ -38,7 +36,7 @@ const namespace = {
 
         for (let i = 0; i < subs.length; i++) {
             const sub = subs[i];
-            const shouldEscape = sub[ignored] ? false : escape;
+            const shouldEscape = sub[re.ignored] ? false : escape;
             subs[i] = shouldEscape ? re.escape(String(sub)) : String(sub);
         }
 
@@ -58,7 +56,7 @@ const namespace = {
 
         // A String instance is used here to be able to add a new property on it.
         const str = new String(string); // eslint-disable-line no-new-wrappers
-        str[ignored] = true;
+        str[re.ignored] = true;
         return str;
     },
     isTemplateTag(item) {
@@ -71,6 +69,7 @@ const namespace = {
 
         return true;
     },
+    ignored: Symbol('ignored'),
     specialEscapeRegex: /[|\\{()[^$+*?.-]/g,
     RegExp: RegExp
 };

@@ -19,8 +19,9 @@ declare namespace re {
 
     export function isTemplateTag(item: any): boolean;
 
-    export var specialEscapeRegex: RegExp;
-    export var RegExp: RegExpConstructor;
+    export let specialEscapeRegex: RegExp;
+    export let RegExp: RegExpConstructor;
+    export const ignored: symbol;
 }
 
 export = re;
