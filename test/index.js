@@ -1,8 +1,11 @@
 const re = require('..');
-const assert = require('assert');
 
 function is(r1, r2) {
-    return r1.toString() === r2.toString();
+    return {
+        passed: r1.toString() === r2.toString(),
+        expected: r2,
+        actual: r1
+    };
 }
 
 const tests = {
@@ -57,9 +60,8 @@ const tests = {
 };
 
 for (const key of Object.keys(tests)) {
-    try {
-        assert(tests[key](), `Test ${key} failed`);
-    } catch (err) {
-        console.error(err);
+    const res = tests[key]();
+    if (!res.passed) {
+        console.error(`Test ${key} failed\nExpected: ${res.expected}\nActual:   ${res.actual}`);
     }
 }
