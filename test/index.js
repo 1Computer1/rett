@@ -47,6 +47,7 @@ const tests = {
     multiline() {
         const regex = re.line('g')`
             Hello
+            ${' '}${2}
             (
                 World
                 (?:
@@ -55,7 +56,7 @@ const tests = {
             ) // Hello world!
         `;
 
-        return is(regex, /Hello(World(?:!|\.)*)/g);
+        return is(regex, /Hello 2(World(?:!|\.)*)/g);
     }
 };
 

@@ -37,22 +37,26 @@ const namespace = {
         };
     },
     create(raw, subs, { flags = '', escape = true, multiline = false } = {}) {
-        raw = raw.slice(0);
-
-        if (multiline) {
-            for (let i = 0; i < raw.length; i++) {
-                const str = raw[i];
-                raw[i] = str.replace(/^\s+/gm, '').replace(/[\r\n]+|\/\/.+/g, '').trim();
-            }
-        }
-
         for (let i = 0; i < subs.length; i++) {
             const sub = subs[i];
             const shouldEscape = sub[re.ignored] ? false : escape;
             subs[i] = shouldEscape ? re.escape(String(sub)) : String(sub);
         }
 
-        return new re.RegExp(String.raw({ raw }, ...subs), flags);
+        let string;
+        if (multiline) {
+            const joined = [];
+            for (let i = 0; i < raw.length; i++) {
+                joined.push(raw[i].replace(/^\s+/gm, '').replace(/[\r\n]|\/\/.+/g, '').trim());
+                joined.push(subs[i]);
+            }
+
+            string = joined.join('');
+        } else {
+            string = String.raw({ raw }, ...subs);
+        }
+
+        return new re.RegExp(string, flags);
     },
     escape(string, ...subs) {
         if (re.isTemplateTag(string)) {
