@@ -57,7 +57,7 @@ console.log(re.line`
 
 Ignore escapes if you are planning on building regex bit by bit.  
 This is done with the `re.ignore` function which can take either a string or a template tag.  
-The `re.raw` function is also available for no escaping at all.  
+The `re.raw` function is also available for disabling escaping altogether.  
 
 ```js
 const special = '{0,2}';
@@ -76,16 +76,16 @@ console.log(re`-?${digits}`);
 
 ## Other
 
-### `re.create`
+### `re.create()`
 
 Creates a new regex from the values inputted.  
 Used internally.  
 
-### `re.escape`
+### `re.escape()`
 
 Escapes special regex characters from a string.  
 
-### `re.isTemplateTag`
+### `re.isTemplateTag()`
 
 Checks if a value is a template tag.  
 
