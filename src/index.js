@@ -43,14 +43,14 @@ const namespace = {
         return new re.RegExp(String.raw({ raw }, ...subs), flags);
     },
     escape(string, ...subs) {
-        if (Array.isArray(string) && string.raw) {
+        if (re.isTemplateTag(string)) {
             string = String.raw({ raw: string.raw }, ...subs);
         }
 
         return string.replace(re.specialEscapeRegex, '\\$&');
     },
     ignore(string, ...subs) {
-        if (Array.isArray(string) && string.raw) {
+        if (re.isTemplateTag(string)) {
             string = String.raw({ raw: string.raw }, ...subs);
         }
 
