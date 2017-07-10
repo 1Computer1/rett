@@ -7,6 +7,8 @@
 - Removes need to use double backslash.
 - Escapes special regex characters.
 - Choosing when to escape special characters.
+- Multiline regex with comments and indents.
+- Utility for making complex regex.  
 
 ## Usage
 
@@ -19,10 +21,10 @@ When called normally, it takes regex flags and can only take a template tag from
 const re = require('rett');
 
 console.log(re`\d+\b`);
-=> /\d+\b/
+// => /\d+\b/
 
 console.log(re('gi')`\b[a-z]\b`);
-=> /\b[a-z]\b/gi
+// => /\b[a-z]\b/gi
 ```
 
 ### Substitutions
@@ -34,7 +36,7 @@ All values will automatically be escaped.
 const text = '?+{[()';
 
 console.log(re`${text} \d+`);
-=> /\?\+\{\[\(\) \d+/
+// => /\?\+\{\[\(\) \d+/
 ```
 
 ### Multiline Regex
@@ -50,7 +52,8 @@ console.log(re.line`
         [A-Z]   // Letter
     )
 `);
-=> /(\d+[A-Z])/
+
+// => /(\d+[A-Z])/
 ```
 
 ### Ignoring Escape
@@ -63,15 +66,15 @@ The `re.raw` function is also available for disabling escaping altogether.
 const special = '{0,2}';
 
 console.log(re`1${re.ignore(special)}`);
-=> /1{0,2}/
+// => /1{0,2}/
 
 console.log(re.raw`1${special}`);
-=> /1{0,2}/
+// => /1{0,2}/
 
 const digits = re.ignore`\d+`;
 
 console.log(re`-?${digits}`);
-=> /-?\d+/
+// => /-?\d+/
 ```
 
 ## Other
@@ -81,13 +84,44 @@ console.log(re`-?${digits}`);
 Creates a new regex from the values inputted.  
 Used internally.  
 
+```js
+console.log(re.create(['a', 'b'], [1], { flags: 'g' }));
+// => /a1b/g
+```
+
 ### `re.escape()`
 
 Escapes special regex characters from a string.  
+Can take a template tag and will escape interpolated values.  
+
+```js
+console.log(re.escape('What?'));
+// => 'What\\?'
+```
+
+### `re.join()`
+
+Joins an array together by a character.  
+Escapes the values of the array.  
+Useful for making different possibilties with `|` in regex.  
+
+```js
+const list = re.join(['(', ')', '?']);
+const regex = re`${list}`;
+
+console.log(regex);
+// => /\(|\)|\?/
+```
 
 ### `re.isTemplateTag()`
 
 Checks if a value is a template tag.  
+Used internally.  
+
+```js
+console.log(re.isTemplateTag`asdf`);
+// => true
+```
 
 ### `re.specialEscapeRegex`
 
