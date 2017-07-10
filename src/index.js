@@ -78,6 +78,15 @@ const namespace = {
         return str;
     },
 
+    join(arr, char = '|') {
+        const joined = [];
+        for (const str of arr) {
+            joined.push(str[re.ignored] ? String(str) : re.escape(String(str)));
+        }
+
+        return re.ignore(joined.join(char));
+    },
+
     isTemplateTag(item) {
         if (!Array.isArray(item) || !item.raw) return false;
 

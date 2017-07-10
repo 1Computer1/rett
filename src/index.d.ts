@@ -20,6 +20,8 @@ declare namespace re {
     export function ignore(tag: TemplateStringsArray, ...subs: any[]): String;
     export function ignore(string: string): String;
 
+    export function join(arr: any[], char?: string): String;
+
     export function isTemplateTag(item: any): boolean;
 
     export let specialEscapeRegex: RegExp;
