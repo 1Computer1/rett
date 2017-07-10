@@ -67,6 +67,14 @@ const namespace = {
         return string.replace(re.specialEscapeRegex, '\\$&');
     },
 
+    unescape(string, ...subs) {
+        if (re.isTemplateTag(string)) {
+            string = String.raw({ raw: string.raw }, ...subs);
+        }
+
+        return string.replace(new RegExp(`\\\\(${re.specialEscapeRegex.source})`, 'g'), '$1');
+    },
+
     ignore(string, ...subs) {
         if (re.isTemplateTag(string)) {
             string = String.raw({ raw: string.raw }, ...subs);

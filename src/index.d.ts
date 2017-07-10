@@ -17,6 +17,9 @@ declare namespace re {
     export function escape(tag: TemplateStringsArray, ...subs: any[]): string;
     export function escape(string: string): string;
 
+    export function unescape(tag: TemplateStringsArray, ...subs: any[]): string;
+    export function unescape(string: string): string;
+
     export function ignore(tag: TemplateStringsArray, ...subs: any[]): String;
     export function ignore(string: string): String;
 
