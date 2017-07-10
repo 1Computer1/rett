@@ -16,7 +16,7 @@ function re(string, ...args) {
 const namespace = {
     RegExp,
     ignored: Symbol('ignored'),
-    specialEscapeRegex: /[|\\{()[^$+*?.-]/g,
+    specialEscapeRegex: /[|\\{}()[^$+*?.\]-]/g,
 
     raw(string, ...args) {
         if (re.isTemplateTag(string)) {

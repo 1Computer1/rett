@@ -45,10 +45,10 @@ const tests = {
     },
 
     various() {
-        const one = '[)*?{$';
+        const one = '[()*?{}$';
         const two = 'a+b+c+';
         const regex = re('i')`^${one} ?${re.ignore(two)}$`;
-        return is(regex, /^\[\)\*\?\{\$ ?a+b+c+$/i);
+        return is(regex, /^\[\(\)\*\?\{\}\$ ?a+b+c+$/i);
     },
 
     multiline() {
