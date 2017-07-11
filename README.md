@@ -77,17 +77,7 @@ console.log(re`-?${digits}`);
 // => /-?\d+/
 ```
 
-## Other
-
-### `re.create()`
-
-Creates a new regex from the values inputted.  
-Used internally.  
-
-```js
-console.log(re.create(['a', 'b'], [1], { flags: 'g' }));
-// => /a1b/g
-```
+## Utility
 
 ### `re.escape()`
 
@@ -97,6 +87,17 @@ Can take a template tag and will escape interpolated values.
 ```js
 console.log(re.escape('What?'));
 // => 'What\\?'
+```
+
+### `re.unescape()`
+
+Unescapes special regex characters from a string.  
+Can take a template tag and will unescape interpolated values.  
+Note that this is not a perfect reversal.  
+
+```js
+console.log(re.unescape('What\\?'));
+// => 'What?'
 ```
 
 ### `re.join()`
@@ -113,14 +114,35 @@ console.log(regex);
 // => /\(|\)|\?/
 ```
 
-### `re.isTemplateTag()`
+## Options
 
-Checks if a value is a template tag.  
-Used internally.  
+### `re.options`
+
+You can set the default options here.  
+
+- `escape`: default for escaping substitutions.
+- `multiline`: default for parsing as multiline.
+- `debug`: logs to console whenever a regex is made.
+- `flags.default`: default for flags if no flags provided.
+- `flags.addtion`: flags to add onto exisiting flags.
 
 ```js
-console.log(re.isTemplateTag`asdf`);
-// => true
+re.options = {
+    escape: true,
+    multiline: true,
+    debug: true,
+    flags: {
+        default: 'u',
+        addition: 'u'
+    }
+};
+
+console.log(re`
+    ABC  // Matches A, B, then C.
+    (\d) // Then a number.
+`);
+
+// => /ABC(\d)/u
 ```
 
 ### `re.specialEscapeRegex`
@@ -132,3 +154,25 @@ Reassign with your own if needed.
 
 Constructor used for creating new regular expression instances.  
 Reassign with your own if needed.  
+
+## Other
+
+### `re.create()`
+
+Creates a new regex from the values inputted.  
+Used internally.  
+
+```js
+console.log(re.create(['a', 'b'], [1], { flags: 'g' }));
+// => /a1b/g
+```
+
+### `re.isTemplateTag()`
+
+Checks if a value is a template tag.  
+Used internally.  
+
+```js
+console.log(re.isTemplateTag`asdf`);
+// => true
+```
