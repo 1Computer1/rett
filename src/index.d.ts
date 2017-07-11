@@ -29,6 +29,17 @@ declare namespace re {
 
     export let specialEscapeRegex: RegExp;
     export let RegExp: RegExpConstructor;
+
+    export let options: {
+        debug: boolean,
+        escape: boolean,
+        multiline: boolean,
+        flags: {
+            default: string,
+            addition: string
+        };
+    };
+
     export const ignored: symbol;
 }
 

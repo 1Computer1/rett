@@ -18,6 +18,16 @@ const namespace = {
     ignored: Symbol('ignored'),
     specialEscapeRegex: /[|\\{}()[^$+*?.\]-]/g,
 
+    options: {
+        debug: false,
+        escape: true,
+        multiline: false,
+        flags: {
+            default: '',
+            addition: ''
+        }
+    },
+
     raw(string, ...args) {
         if (re.isTemplateTag(string)) {
             return re('', false)(string, ...args);
@@ -36,7 +46,7 @@ const namespace = {
         return re(string, ...args);
     },
 
-    create(raw, subs, { flags = '', escape = true, multiline = false } = {}) {
+    create(raw, subs, { flags = '', escape = re.options.escape, multiline = re.options.multiline } = {}) {
         for (let i = 0; i < subs.length; i++) {
             const sub = subs[i];
             const shouldEscape = sub[re.ignored] ? false : escape;
@@ -56,7 +66,12 @@ const namespace = {
             string = String.raw({ raw }, ...subs);
         }
 
-        return new re.RegExp(string, flags);
+        if (!flags) flags = re.options.flags.default;
+        flags += [...re.options.flags.addition].filter(f => !flags.includes(f)).join('');
+
+        const regex = new re.RegExp(string, flags);
+        if (re.options.debug) console.dir(regex);
+        return regex;
     },
 
     escape(string, ...subs) {
