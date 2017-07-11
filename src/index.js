@@ -23,7 +23,7 @@ const namespace = {
             return re('', false)(string, ...args);
         }
 
-        args[0] = false;
+        args[0] = args[0] !== undefined ? args[0] : false;
         return re(string, ...args);
     },
 
@@ -32,7 +32,7 @@ const namespace = {
             return re('', true, true)(string, ...args);
         }
 
-        args[1] = true;
+        args[1] = args[1] !== undefined ? args[1] : true;
         return re(string, ...args);
     },
 

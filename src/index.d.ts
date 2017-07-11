@@ -3,10 +3,10 @@ declare function re(flags: string, escape?: boolean, multiline?: boolean): (tag:
 
 declare namespace re {
     export function raw(tag: TemplateStringsArray, ...subs: any[]): RegExp;
-    export function raw(flags: string, escape?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
+    export function raw(flags: string, escape?: boolean, multiline?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
 
     export function line(tag: TemplateStringsArray, ...subs: any[]): RegExp;
-    export function line(flags: string, escape?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
+    export function line(flags: string, escape?: boolean, multiline?: boolean): (tag: TemplateStringsArray, ...subs: any[]) => RegExp;
 
     export function create(raw: string[], subs: any[], opts?: {
         flags?: string,
