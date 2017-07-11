@@ -53,17 +53,17 @@ const tests = {
 
     multiline() {
         const regex = re.line('g')`
-            Hello
-            ${' '}${2}
+            Hello      // Things
+            ${' '}${2} // Stuff
             (
-                World
+                World${1} ${3} +
                 (?:
-                    !|\.
+                    !|\.\n
                 )*
             ) // Hello world!
         `;
 
-        return is(regex, /Hello 2(World(?:!|\.)*)/g);
+        return is(regex, /Hello 2(World1 3 +(?:!|\.\n)*)/g);
     },
 
     join() {

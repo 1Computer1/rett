@@ -47,11 +47,11 @@ const namespace = {
         if (multiline) {
             const joined = [];
             for (let i = 0; i < raw.length; i++) {
-                joined.push(raw[i].replace(/^\s+/gm, '').replace(/[\r\n]|\/\/.+/g, '').trim());
+                joined.push(raw[i].replace(/\s*?\/\/.+/g, '').replace(/[\r\n]+\s*/g, ''));
                 joined.push(subs[i]);
             }
 
-            string = joined.join('');
+            string = joined.join('').trim();
         } else {
             string = String.raw({ raw }, ...subs);
         }
